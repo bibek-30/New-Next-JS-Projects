@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.info {
+  flex: 1;
+}
+
+.desc {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.author {
+  justify-content: center;
+  justify-content: flex-start;
+}
+
+.imgcontainer {
+  flex: 1;
+  height: 300px;
+  position: relative;
+}
+
+.images {
+  object-fit: cover;
+}
+
+.content {
+  margin-top: 50px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #999;
+  text-align: justify;
+}
+  
