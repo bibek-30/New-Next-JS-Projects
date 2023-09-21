@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PageNotFoundError } from "next/dist/shared/lib/utils";
 
 async function getData(id) {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`);
   if (!res.ok) {
     return new PageNotFoundError();
   }
@@ -12,6 +12,7 @@ async function getData(id) {
 }
 
 const BlogPost = async ({ params }) => {
+  console.log("params", params)
   const data = await getData(params.id);
   return (
     <div className={styles.container}>

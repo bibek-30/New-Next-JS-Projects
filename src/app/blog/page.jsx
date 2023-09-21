@@ -4,10 +4,11 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 async function getData() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
+  const res = await fetch(`http://localhost:3000/api/posts`, {
     cache: "no-store",
   });
   if (!res.ok) {
+    console.log(res)
     throw new Error("Failed to retrive the data!");
   }
   return res.json();
@@ -15,12 +16,11 @@ async function getData() {
 
 const Blog = async () => {
   const data = await getData();
-  console.log(data);
   return (
     <div className={styles.mainContainer}>
       {data.map((items) => (
         <div className={styles.container} key={items.id}>
-          <Link href="/blog/testId">
+          <Link href='/blog/{items.id}'>
             <div className={styles.item}>
               <div className={styles.imgContainer}>
                 <Image
@@ -33,7 +33,7 @@ const Blog = async () => {
               </div>
               <div className={styles.content}>
                 <h1>{items.title}</h1>
-                <p>{items.body}</p>
+                <p>{items.desc}</p>
               </div>
             </div>
           </Link>
