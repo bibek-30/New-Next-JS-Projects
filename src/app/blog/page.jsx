@@ -3,81 +3,42 @@ import React from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 
-const Blog = () => {
+async function getData() {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to retrive the data!");
+  }
+  return res.json();
+}
+
+const Blog = async () => {
+  const data = await getData();
+  console.log(data);
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.container}>
-        <Link href="/blog/testId">
-          <div className={styles.item}>
-            <div className={styles.imgContainer}>
-              <Image
-                src="/creative.jpg"
-                alt="Category Banner"
-                className={styles.images}
-                width={400}
-                height={250}
-              />
+      {data.map((items) => (
+        <div className={styles.container} key={items.id}>
+          <Link href="/blog/testId">
+            <div className={styles.item}>
+              <div className={styles.imgContainer}>
+                <Image
+                  src="/creative.jpg"
+                  alt="Category Banner"
+                  className={styles.images}
+                  width={400}
+                  height={250}
+                />
+              </div>
+              <div className={styles.content}>
+                <h1>{items.title}</h1>
+                <p>{items.body}</p>
+              </div>
             </div>
-            <div className={styles.content}>
-              <h1>Creative Portfolio</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Numquam, unde. Corporis molestiae ipsum iste voluptas. Optio
-                quisquam odio cumque provident, sapiente quas quae in voluptate
-                quos hic ullam dolorum dicta.
-              </p>
-            </div>
-          </div>
-        </Link>
-      </div>
-      <div className={styles.container}>
-        <Link href="/blog/testId">
-          <div className={styles.item}>
-            <div className={styles.imgContainer}>
-              <Image
-                src="/creative.jpg"
-                alt="Category Banner"
-                className={styles.images}
-                width={400}
-                height={250}
-              />
-            </div>
-            <div className={styles.content}>
-              <h1>Creative Portfolio</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Numquam, unde. Corporis molestiae ipsum iste voluptas. Optio
-                quisquam odio cumque provident, sapiente quas quae in voluptate
-                quos hic ullam dolorum dicta.
-              </p>
-            </div>
-          </div>
-        </Link>
-      </div>
-      <div className={styles.container}>
-        <Link href="/blog/testId">
-          <div className={styles.item}>
-            <div className={styles.imgContainer}>
-              <Image
-                src="/creative.jpg"
-                alt="Category Banner"
-                className={styles.images}
-                width={400}
-                height={250}
-              />
-            </div>
-            <div className={styles.content}>
-              <h1>Creative Portfolio</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Numquam, unde. Corporis molestiae ipsum iste voluptas. Optio
-                quisquam odio cumque provident, sapiente quas quae in voluptate
-                quos hic ullam dolorum dicta.
-              </p>
-            </div>
-          </div>
-        </Link>
-      </div>
+          </Link>
+        </div>
+      ))}
     </div>
   );
 };

@@ -1,7 +1,18 @@
 import React from "react";
 import styles from "./blog.module.css";
 import Image from "next/image";
-const BlogPost = () => {
+import { PageNotFoundError } from "next/dist/shared/lib/utils";
+
+async function getData(id) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  if (!res.ok) {
+    return new PageNotFoundError();
+  }
+  return res.json();
+}
+
+const BlogPost = async ({ params }) => {
+  const data = await getData(params.id);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -10,12 +21,7 @@ const BlogPost = () => {
             {" "}
             Lorem ipsum dolor sit amet consectetur.
           </h1>
-          <p className={styles.desc}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas dicta
-            non amet suscipit ipsa recusandae vel sit nobis, consectetur optio.
-            Eum quasi dignissimos vero delectus quae sit ullam vitae
-            accusantium?
-          </p>
+          <p className={styles.desc}>{data.title}</p>
           <div
             className={styles.author}
             style={{ display: "flex", alignItems: "center" }}
